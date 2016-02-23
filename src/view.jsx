@@ -12,7 +12,7 @@ const View = React.createClass({
 
   render() {
     return <div>
-      text view
+      <textarea>{this.props.value|| ""}</textarea>
     </div>
   }
 
