@@ -8,7 +8,10 @@
 
 const alaska = require('alaska');
 
-exports.template = __dirname + '/lib/view.js';
+exports.views = [{
+  cell: __dirname + '/lib/cell.js',
+  view: __dirname + '/lib/view.js',
+}];
 
 exports.plain = String;
 

@@ -1,6 +1,6 @@
 /**
  * @copyright Maichong Software Ltd. 2016 http://maichong.it
- * @date 2016-02-22
+ * @date 2016-02-25
  * @author Liang <liang@maichong.it>
  */
 
@@ -8,11 +8,11 @@
 
 import React from 'react';
 
-export default class TextFieldView extends React.Component {
+export default class TextFieldCell extends React.Component {
 
   render() {
     return <div>
-      text field view
+      text field cell
     </div>
   }
 
