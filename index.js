@@ -8,22 +8,15 @@
 
 const alaska = require('alaska');
 
-exports.views = [{
-  cell: __dirname + '/lib/cell.js',
-  view: __dirname + '/lib/view.js',
-}];
+exports.views = {
+  cell: {
+    name: 'TextFieldCell',
+    field: __dirname + '/lib/cell.js'
+  },
+  view: {
+    name: 'TextFieldView',
+    field: __dirname + '/lib/view.js'
+  }
+};
 
 exports.plain = String;
-
-/**
- * 初始化方法
- * @param field   alaksa.Model中的字段配置
- * @param options Mongoose模型字段初始化参数
- */
-exports.init = function (field, options) {
-  if (field.uppercase) {
-    options.uppercase = field.uppercase;
-  }
-
-  //TODO 所有mongoose String 类型初始化参数
-};
