@@ -1,27 +1,35 @@
 /**
  * @copyright Maichong Software Ltd. 2016 http://maichong.it
- * @date 2016-03-02
+ * @date 2016-03-07
  * @author Liang <liang@maichong.it>
  */
 
 import React from 'react';
 import getMuiTheme from 'material-ui/lib/styles/getMuiTheme';
 import ContextPure from 'material-ui/lib/mixins/context-pure';
+import TextField from 'material-ui/lib/text-field';
 
 export default class TextFieldView extends React.Component {
 
   static propTypes = {
-    children: React.PropTypes.node
+    value: React.PropTypes.any,
+    model: React.PropTypes.object,
+    data: React.PropTypes.object,
+    field: React.PropTypes.object,
+    onChange: React.PropTypes.func,
+
   };
 
   static contextTypes = {
     muiTheme: React.PropTypes.object,
     views: React.PropTypes.object,
+    settings: React.PropTypes.object,
   };
 
   static childContextTypes = {
     muiTheme: React.PropTypes.object,
     views: React.PropTypes.object,
+    settings: React.PropTypes.object,
   };
 
   static mixins = [
@@ -32,7 +40,8 @@ export default class TextFieldView extends React.Component {
     super(props);
     this.state = {
       muiTheme: context.muiTheme ? context.muiTheme : getMuiTheme(),
-      views: context.views
+      views: context.views,
+      settings: context.settings,
     };
   }
 
@@ -40,13 +49,8 @@ export default class TextFieldView extends React.Component {
     return {
       muiTheme: this.state.muiTheme,
       views: this.context.views,
+      settings: this.context.settings,
     };
-  }
-
-  componentWillMount() {
-  }
-
-  componentDidMount() {
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
@@ -60,17 +64,15 @@ export default class TextFieldView extends React.Component {
     this.setState(newState);
   }
 
-  componentWillUnmount() {
-  }
-
   render() {
-    let props = this.props;
-    let state = this.state;
-    let styles = {
-      root: {}
-    };
+    let {
+      model,
+      data,
+      field,
+      ...others
+      } = this.props;
     return (
-      <div style={styles.root}>TextFieldView Component</div>
+      <div><TextField ref="input" fullWidth={field.fullWidth} hintText={field.label} {...others}/></div>
     );
   }
 }

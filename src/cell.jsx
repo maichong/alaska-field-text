@@ -70,7 +70,7 @@ export default class TextFieldCell extends React.Component {
       root: {}
     };
     return (
-      <div style={styles.root}>TextFieldCell Component</div>
+      <div style={styles.root}>{props.value}</div>
     );
   }
 }
