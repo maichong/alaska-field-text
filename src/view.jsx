@@ -38,6 +38,7 @@ export default class TextFieldView extends React.Component {
 
   constructor(props, context) {
     super(props);
+    this._handleChange = this._handleChange.bind(this);
     this.state = {
       muiTheme: context.muiTheme ? context.muiTheme : getMuiTheme(),
       views: context.views,
@@ -64,15 +65,26 @@ export default class TextFieldView extends React.Component {
     this.setState(newState);
   }
 
+  _handleChange(event) {
+    this.props.onChange && this.props.onChange(event.target.value);
+  }
+
   render() {
     let {
       model,
       data,
       field,
+      onChange,
       ...others
       } = this.props;
     return (
-      <div><TextField ref="input" fullWidth={field.fullWidth} hintText={field.label} {...others}/></div>
+      <div><TextField
+        ref="input"
+        fullWidth={field.fullWidth}
+        hintText={field.label}
+        onChange={this._handleChange}
+        {...others}
+      /></div>
     );
   }
 }
