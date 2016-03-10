@@ -77,14 +77,17 @@ export default class TextFieldView extends React.Component {
       onChange,
       ...others
       } = this.props;
+    let {muiTheme} = this.state;
+    let noteElement = field.note ?
+      <div style={field.fullWidth?muiTheme.fieldNote:muiTheme.fieldNoteInline}>{field.note}</div> : null;
     return (
       <div><TextField
         ref="input"
         fullWidth={field.fullWidth}
-        hintText={field.label}
+        floatingLabelText={field.label}
         onChange={this._handleChange}
         {...others}
-      /></div>
+      />{noteElement}</div>
     );
   }
 }
