@@ -43,12 +43,6 @@ export default class TextFieldCell extends React.Component {
     };
   }
 
-  componentWillMount() {
-  }
-
-  componentDidMount() {
-  }
-
   componentWillReceiveProps(nextProps, nextContext) {
     let newState = {};
     if (nextContext.muiTheme) {
@@ -60,17 +54,14 @@ export default class TextFieldCell extends React.Component {
     this.setState(newState);
   }
 
-  componentWillUnmount() {
+  shouldComponentUpdate(props) {
+    return props.value != this.props.value;
   }
 
   render() {
-    let props = this.props;
-    let state = this.state;
-    let styles = {
-      root: {}
-    };
+    let value = this.props.value;
     return (
-      <div style={styles.root}>{props.value}</div>
+      <div>{value}</div>
     );
   }
 }

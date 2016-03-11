@@ -9,6 +9,8 @@ import getMuiTheme from 'material-ui/lib/styles/getMuiTheme';
 import ContextPure from 'material-ui/lib/mixins/context-pure';
 import TextField from 'material-ui/lib/text-field';
 
+import { shallowEqual } from 'alaska-admin-view';
+
 export default class TextFieldView extends React.Component {
 
   static propTypes = {
@@ -38,7 +40,7 @@ export default class TextFieldView extends React.Component {
 
   constructor(props, context) {
     super(props);
-    this._handleChange = this._handleChange.bind(this);
+    this.handleChange = this.handleChange.bind(this);
     this.state = {
       muiTheme: context.muiTheme ? context.muiTheme : getMuiTheme(),
       views: context.views,
@@ -65,8 +67,12 @@ export default class TextFieldView extends React.Component {
     this.setState(newState);
   }
 
-  _handleChange(event) {
+  handleChange(event) {
     this.props.onChange && this.props.onChange(event.target.value);
+  }
+
+  shouldComponentUpdate(props) {
+    return !shallowEqual(props, this.props, 'data', 'onChange', 'model', 'field');
   }
 
   render() {
@@ -85,7 +91,7 @@ export default class TextFieldView extends React.Component {
         ref="input"
         fullWidth={field.fullWidth}
         floatingLabelText={field.label}
-        onChange={this._handleChange}
+        onChange={this.handleChange}
         {...others}
       />{noteElement}</div>
     );
