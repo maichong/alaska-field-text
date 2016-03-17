@@ -20,3 +20,14 @@ exports.views = {
 };
 
 exports.plain = String;
+
+/**
+ * alaska-admin-view 前端控件初始化参数
+ * @param field
+ * @param Model
+ */
+exports.viewOptions = function (field, Model) {
+  let options = alaska.Field.viewOptions.apply(this, arguments);
+  options.multiLine = field.multiLine;
+  return options;
+};

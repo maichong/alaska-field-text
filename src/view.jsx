@@ -90,6 +90,7 @@ export default class TextFieldView extends React.Component {
       <div><TextField
         ref="input"
         fullWidth={field.fullWidth}
+        multiLine={field.multiLine}
         floatingLabelText={field.label}
         onChange={this.handleChange}
         {...others}
