@@ -30,6 +30,10 @@ exports.initSchema = function (field, schema, Model) {
     maxlength: field.maxlength,
     minlength: field.minlength
   };
+  if (field.default !== undefined) {
+    options.default = field.default;
+  }
+  schema.path(field.path, options);
 }
 /**
  * alaska-admin-view 前端控件初始化参数
