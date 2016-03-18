@@ -22,8 +22,11 @@ exports.views = {
 exports.plain = String;
 exports.initSchema = function (field, schema, Model) {
   let options = {
-    type: Number
+    type: String
   };
+  if (field.match && !(field instanceof RegExp)) {
+    throw new Error(`${Model.name}.${field.path} field "match" option must be instance of RegExp`);
+  }
   [
     'get',
     'set',
@@ -43,7 +46,8 @@ exports.initSchema = function (field, schema, Model) {
     }
   });
   schema.path(field.path, options);
-}
+};
+
 /**
  * alaska-admin-view 前端控件初始化参数
  * @param field
@@ -52,7 +56,7 @@ exports.initSchema = function (field, schema, Model) {
 exports.viewOptions = function (field, Model) {
   let options = alaska.Field.viewOptions.apply(this, arguments);
   options.trim = field.trim;
-  options.match = field.match instanceof RegExp ? field.match.toString() : field.match;
+  options.match = field.match;
   options.lowercase = field.lowercase;
   options.uppercase = field.uppercase;
   options.maxlength = field.maxlength instanceof Array ? field.maxlength[0] : field.maxlength;
