@@ -22,17 +22,26 @@ exports.views = {
 exports.plain = String;
 exports.initSchema = function (field, schema, Model) {
   let options = {
-    type: String,
-    lowercase: field.lowercase,
-    uppercase: field.uppercase,
-    trim: field.trim,
-    match: field.match instanceof RegExp ? field.match : null,
-    maxlength: field.maxlength,
-    minlength: field.minlength
+    type: Number
   };
-  if (field.default !== undefined) {
-    options.default = field.default;
-  }
+  [
+    'get',
+    'set',
+    'default',
+    'index',
+    'required',
+    'select',
+    'trim',
+    'match',
+    'lowercase',
+    'uppercase',
+    'maxlength',
+    'minlength'
+  ].forEach(function (key) {
+    if (field[key] !== undefined) {
+      options[key] = field[key];
+    }
+  });
   schema.path(field.path, options);
 }
 /**
