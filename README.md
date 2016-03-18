@@ -6,16 +6,18 @@ Alaska text field
 
 export default {
   'alaska-field-text': {
-   lowercase: field.lowercase,//是否全部转为小写
-   uppercase: field.uppercase,//是否全部转为大写
-   trim: field.trim, //是否去掉首尾空格
-   //对字段使用的正则表达式 在view中接收到的是字符串，需要重新转换成正则表达式，
-   //可以使用
-   //let m=props.field.match.split('/');
-   //let reg=new RegExp(m[1],m[2]);
-   match: field.match instanceof RegExp ? field.match : null,
-   maxlength: field.maxlength, //字段最大长度
-   minlength: field.minlength //字段最小长度
+    //是否全部转为小写
+    lowercase: false,
+    //是否全部转为大写
+    uppercase: false,
+    //是否去掉首尾空格
+    trim: false,
+    //字符串模式
+    match: /^[a-z]\w*/i,
+    //字段最大长度
+    maxlength: 20,
+    //字段最小长度
+    minlength: 1
   }
 }
 ```
