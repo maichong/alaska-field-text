@@ -8,7 +8,45 @@
 
 const alaska = require('alaska');
 
-exports.views = {
+class TextFeild extends alaska.Field {
+  init() {
+    if (this.match && !(this.match instanceof RegExp)) {
+      throw new Error(`${this._model.name}.${this.path} field "match" option must be instance of RegExp`);
+    }
+  }
+
+  createFilter(filter) {
+    let exact = true;
+    let inverse = false;
+    let value = filter;
+    if (typeof filter == 'string') {
+      value = filter.value;
+      exact = filter.exact !== false;
+      inverse = filter.inverse;
+    }
+    let result;
+
+    if (value) {
+      if (exact) {
+        result = new RegExp('^' + alaska.util.escapeRegExp(value) + '$', 'i');
+      } else {
+        result = new RegExp(alaska.util.escapeRegExp(value), 'i');
+      }
+      if (inverse) {
+        result = { $not: result };
+      }
+    } else {
+      if (inverse) {
+        result = { $nin: ['', null] };
+      } else {
+        result = { $in: ['', null] };
+      }
+    }
+    return result;
+  }
+}
+
+TextFeild.views = {
   cell: {
     name: 'TextFieldCell',
     field: __dirname + '/lib/cell.js'
@@ -19,47 +57,9 @@ exports.views = {
   }
 };
 
-exports.plain = String;
-exports.initSchema = function (field, schema, Model) {
-  let options = {
-    type: String
-  };
-  if (field.match && !(field instanceof RegExp)) {
-    throw new Error(`${Model.name}.${field.path} field "match" option must be instance of RegExp`);
-  }
-  [
-    'get',
-    'set',
-    'default',
-    'index',
-    'required',
-    'select',
-    'trim',
-    'match',
-    'lowercase',
-    'uppercase',
-    'maxlength',
-    'minlength'
-  ].forEach(function (key) {
-    if (field[key] !== undefined) {
-      options[key] = field[key];
-    }
-  });
-  schema.path(field.path, options);
-};
+TextFeild.plain = String;
 
-/**
- * alaska-admin-view 前端控件初始化参数
- * @param field
- * @param Model
- */
-exports.viewOptions = function (field, Model) {
-  let options = alaska.Field.viewOptions.apply(this, arguments);
-  options.trim = field.trim;
-  options.match = field.match;
-  options.lowercase = field.lowercase;
-  options.uppercase = field.uppercase;
-  options.maxlength = field.maxlength instanceof Array ? field.maxlength[0] : field.maxlength;
-  options.multiLine = field.multiLine instanceof Array ? field.multiLine[0] : field.multiLine;
-  return options;
-};
+TextFeild.options = ['trim', 'match', 'lowercase', 'uppercase', 'maxlength', 'minlength'];
+TextFeild.viewOptions = ['trim', 'match', 'lowercase', 'uppercase', 'maxlength', 'minlength'];
+
+module.exports = TextFeild;
