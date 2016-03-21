@@ -5,9 +5,7 @@
  */
 
 import React from 'react';
-import getMuiTheme from 'material-ui/lib/styles/getMuiTheme';
-import ContextPure from 'material-ui/lib/mixins/context-pure';
-import TextField from 'material-ui/lib/text-field';
+import { Input } from 'react-bootstrap';
 
 import { shallowEqual } from 'alaska-admin-view';
 
@@ -23,53 +21,21 @@ export default class TextFieldView extends React.Component {
   };
 
   static contextTypes = {
-    muiTheme: React.PropTypes.object,
     views: React.PropTypes.object,
     settings: React.PropTypes.object,
   };
 
-  static childContextTypes = {
-    muiTheme: React.PropTypes.object,
-    views: React.PropTypes.object,
-    settings: React.PropTypes.object,
-  };
+  //constructor(props, context) {
+  //  super(props);
+  //  this.handleChange = this.handleChange.bind(this);
+  //}
+  //
+  //componentWillReceiveProps(nextProps, nextContext) {
+  //}
 
-  static mixins = [
-    ContextPure
-  ];
-
-  constructor(props, context) {
-    super(props);
-    this.handleChange = this.handleChange.bind(this);
-    this.state = {
-      muiTheme: context.muiTheme ? context.muiTheme : getMuiTheme(),
-      views: context.views,
-      settings: context.settings,
-    };
-  }
-
-  getChildContext() {
-    return {
-      muiTheme: this.state.muiTheme,
-      views: this.context.views,
-      settings: this.context.settings,
-    };
-  }
-
-  componentWillReceiveProps(nextProps, nextContext) {
-    let newState = {};
-    if (nextContext.muiTheme) {
-      newState.muiTheme = nextContext.muiTheme;
-    }
-    if (nextContext.views) {
-      newState.views = nextContext.views;
-    }
-    this.setState(newState);
-  }
-
-  handleChange(event) {
+  handleChange = (event) => {
     this.props.onChange && this.props.onChange(event.target.value);
-  }
+  };
 
   shouldComponentUpdate(props) {
     return !shallowEqual(props, this.props, 'data', 'onChange', 'model', 'field');
@@ -81,20 +47,17 @@ export default class TextFieldView extends React.Component {
       data,
       field,
       onChange,
-      ...others
+      value
       } = this.props;
-    let {muiTheme} = this.state;
-    let noteElement = field.note ?
-      <div style={field.fullWidth?muiTheme.fieldNote:muiTheme.fieldNoteInline}>{field.note}</div> : null;
     return (
-      <div><TextField
+      <div><Input
         ref="input"
-        fullWidth={field.fullWidth}
-        multiLine={field.multiLine}
-        floatingLabelText={field.label}
+        type="text"
+        label={field.label}
+        value={value}
         onChange={this.handleChange}
-        {...others}
-      />{noteElement}</div>
+        labelClassName="col-xs-2" wrapperClassName="col-xs-10"
+      /></div>
     );
   }
 }
