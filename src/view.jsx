@@ -17,21 +17,7 @@ export default class TextFieldView extends React.Component {
     data: React.PropTypes.object,
     field: React.PropTypes.object,
     onChange: React.PropTypes.func,
-
   };
-
-  static contextTypes = {
-    views: React.PropTypes.object,
-    settings: React.PropTypes.object,
-  };
-
-  //constructor(props, context) {
-  //  super(props);
-  //  this.handleChange = this.handleChange.bind(this);
-  //}
-  //
-  //componentWillReceiveProps(nextProps, nextContext) {
-  //}
 
   handleChange = (event) => {
     this.props.onChange && this.props.onChange(event.target.value);
@@ -47,17 +33,29 @@ export default class TextFieldView extends React.Component {
       data,
       field,
       onChange,
-      value
+      value,
+      errorText
       } = this.props;
+    let help = field.help;
+    let style;
+    if (errorText) {
+      style = 'error';
+      help = errorText;
+    }
     return (
-      <div><Input
+      <Input
         ref="input"
         type="text"
+        bsStyle={style}
         label={field.label}
         value={value}
         onChange={this.handleChange}
-        labelClassName="col-xs-2" wrapperClassName="col-xs-10"
-      /></div>
+        labelClassName="col-xs-2"
+        wrapperClassName="col-xs-10"
+        help={help}
+        addonAfter={field.addonAfter}
+        addonBefore={field.addonBefore}
+      />
     );
   }
 }
