@@ -32,6 +32,7 @@ export default class TextFieldView extends React.Component {
       model,
       data,
       field,
+      disabled,
       onChange,
       value,
       errorText
@@ -49,6 +50,7 @@ export default class TextFieldView extends React.Component {
         bsStyle={style}
         label={field.label}
         value={value}
+        disabled={disabled}
         onChange={this.handleChange}
         labelClassName="col-xs-2"
         wrapperClassName="col-xs-10"
