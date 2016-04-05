@@ -19,7 +19,7 @@ class TextFeild extends alaska.Field {
     let exact = true;
     let inverse = false;
     let value = filter;
-    if (typeof filter == 'string') {
+    if (typeof filter === 'object') {
       value = filter.value;
       exact = filter.exact !== false;
       inverse = filter.inverse;
