@@ -5,59 +5,79 @@
  */
 
 import React from 'react';
-import { Input } from 'react-bootstrap';
 
 import { shallowEqual } from 'alaska-admin-view';
 
 export default class TextFieldView extends React.Component {
 
   static propTypes = {
-    value: React.PropTypes.any,
     model: React.PropTypes.object,
-    data: React.PropTypes.object,
     field: React.PropTypes.object,
+    data: React.PropTypes.object,
+    errorText: React.PropTypes.string,
+    disabled: React.PropTypes.bool,
+    value: React.PropTypes.any,
     onChange: React.PropTypes.func,
-  };
-
-  handleChange = (event) => {
-    this.props.onChange && this.props.onChange(event.target.value);
   };
 
   shouldComponentUpdate(props) {
     return !shallowEqual(props, this.props, 'data', 'onChange', 'model', 'field');
   }
 
+  handleChange = (event) => {
+    this.props.onChange && this.props.onChange(event.target.value);
+  };
+
   render() {
     let {
-      model,
-      data,
       field,
       disabled,
-      onChange,
       value,
       errorText
       } = this.props;
     let help = field.help;
-    let style;
+    let className = 'form-group';
     if (errorText) {
-      style = 'error';
+      className += ' has-error';
       help = errorText;
     }
+    let helpElement = help ? <p className="help-block">{help}</p> : null;
+    let inputElement;
+    if (field.static) {
+      inputElement = <p className="form-control-static">{value}</p>;
+    } else {
+      inputElement =
+        <input type="text" className="form-control" onChange={this.handleChange} value={value} disabled={disabled}/>;
+      let addonAfter = field.addonAfter ? <span className="input-group-addon">{field.addonAfter}</span> : null;
+      let addonBefore = field.addonBefore ? <span className="input-group-addon">{field.addonBefore}</span> : null;
+      if (addonAfter || addonBefore) {
+        inputElement = <div className="input-group">{addonBefore}{inputElement}{addonAfter}</div>;
+      }
+    }
+
+    let label = field.nolabel ? '' : field.label;
+
+    if (field.fullWidth) {
+      let labelElement = label ? (
+        <label className="control-label">{label}</label>
+      ) : null;
+      return (
+        <div className={className}>
+          {labelElement}
+          {inputElement}
+          {helpElement}
+        </div>
+      );
+    }
+
     return (
-      <Input
-        ref="input"
-        type="text"
-        bsStyle={style}
-        label={field.label}
-        value={value}
-        disabled={disabled}
-        onChange={this.handleChange}
-        labelClassName="col-xs-2"
-        wrapperClassName="col-xs-10"
-        help={help}
-        addonAfter={field.addonAfter}
-        addonBefore={field.addonBefore}
-      />
+      <div className={className}>
+        <label className="col-sm-2 control-label">{label}</label>
+        <div className="col-sm-10">
+          {inputElement}
+          {helpElement}
+        </div>
+      </div>
     );
   }
 }
