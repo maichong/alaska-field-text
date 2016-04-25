@@ -21,8 +21,9 @@ class TextFeild extends alaska.Field {
     let value = filter;
     if (typeof filter === 'object') {
       value = filter.value;
-      exact = filter.exact !== false;
-      inverse = filter.inverse;
+      //默认精确
+      exact = filter.exact !== false && filter.exact !== 'false';
+      inverse = filter.inverse && filter.inverse !== 'false';
     }
     let result;
 
@@ -54,6 +55,10 @@ TextFeild.views = {
   view: {
     name: 'TextFieldView',
     field: __dirname + '/lib/view.js'
+  },
+  filter: {
+    name: 'TextFieldFilter',
+    field: __dirname + '/lib/filter.js'
   }
 };
 
