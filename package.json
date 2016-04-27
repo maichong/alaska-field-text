@@ -1,7 +1,11 @@
 {
   "name": "alaska-field-text",
-  "version": "0.9.0",
-  "description": "",
+  "version": "0.9.1",
+  "description": "Alaska text field",
+  "keywords": [
+    "alaska",
+    "alaska-field"
+  ],
   "main": "index.js",
   "scripts": {
     "build": "babel ./src --out-dir ./lib",
@@ -13,10 +17,6 @@
     "type": "git",
     "url": "git+https://github.com/maichong/alaska-field-text.git"
   },
-  "keywords": [
-    "alaska",
-    "text"
-  ],
   "author": {
     "email": "liang@maichong.it",
     "name": "liang",

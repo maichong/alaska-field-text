@@ -65,6 +65,6 @@ TextFeild.views = {
 TextFeild.plain = String;
 
 TextFeild.options = ['trim', 'match', 'lowercase', 'uppercase', 'maxlength', 'minlength'];
-TextFeild.viewOptions = ['trim', 'match', 'lowercase', 'uppercase', 'maxlength', 'minlength', 'addonBefore', 'addonAfter'];
+TextFeild.viewOptions = ['trim', 'match', 'lowercase', 'uppercase', 'maxlength', 'minlength', 'addonBefore', 'addonAfter', 'multiLine'];
 
 module.exports = TextFeild;
