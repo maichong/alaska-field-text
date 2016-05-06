@@ -7,13 +7,27 @@
 import React from 'react';
 
 export default class TextFieldCell extends React.Component {
-  
+
+  static propTypes = {
+    model: React.PropTypes.object,
+    field: React.PropTypes.object,
+    value: React.PropTypes.any
+  };
+
+  static contextTypes = {
+    t: React.PropTypes.func,
+  };
+
   shouldComponentUpdate(props) {
     return props.value != this.props.value;
   }
 
   render() {
-    let value = this.props.value;
+    let {value, field, model} = this.props;
+    if (value && field.translate) {
+      const t = this.context.t;
+      value = t(value, model.service.id);
+    }
     return (
       <div>{value}</div>
     );

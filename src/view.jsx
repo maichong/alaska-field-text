@@ -49,6 +49,9 @@ export default class TextFieldView extends React.Component {
     }
     let helpElement = help ? <p className="help-block">{help}</p> : null;
     let inputElement;
+    if (disabled && value && field.translate) {
+      value = t(value, model.service.id);
+    }
     if (field.static) {
       inputElement = <p className="form-control-static">{value}</p>;
     } else {
@@ -59,9 +62,9 @@ export default class TextFieldView extends React.Component {
         inputElement =
           <input type="text" className="form-control" onChange={this.handleChange} value={value} disabled={disabled}/>;
         let addonAfter = field.addonAfter ?
-          <span className="input-group-addon">{t(field.addonAfter, model.service.id)}</span> : null;
+          <span className="input-group-addon">{t(field.addonAfter, field.service || model.service.id)}</span> : null;
         let addonBefore = field.addonBefore ?
-          <span className="input-group-addon">{t(field.addonBefore, model.service.id)}</span> : null;
+          <span className="input-group-addon">{t(field.addonBefore, field.service || model.service.id)}</span> : null;
         if (addonAfter || addonBefore) {
           inputElement = <div className="input-group">{addonBefore}{inputElement}{addonAfter}</div>;
         }
