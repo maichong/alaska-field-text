@@ -50,15 +50,15 @@ class TextFeild extends alaska.Field {
 TextFeild.views = {
   cell: {
     name: 'TextFieldCell',
-    field: __dirname + '/lib/cell.js'
+    path: __dirname + '/lib/cell.js'
   },
   view: {
     name: 'TextFieldView',
-    field: __dirname + '/lib/view.js'
+    path: __dirname + '/lib/view.js'
   },
   filter: {
     name: 'TextFieldFilter',
-    field: __dirname + '/lib/filter.js'
+    path: __dirname + '/lib/filter.js'
   }
 };
 
