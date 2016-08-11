@@ -49,6 +49,7 @@ export default class TextFieldView extends React.Component {
     }
     let helpElement = help ? <p className="help-block">{help}</p> : null;
     let inputElement;
+    value = value || '';
     if (disabled && value && field.translate) {
       value = t(value, model.service.id);
     }
