@@ -56,12 +56,15 @@ export default class TextFieldView extends React.Component {
     if (field.static) {
       inputElement = <p className="form-control-static">{value}</p>;
     } else {
+      let placeholder = field.placeholder ? t(field.placeholder, field.service || model.service.id) : '';
       if (field.multiLine) {
         inputElement =
-          <textarea className="form-control" onChange={this.handleChange} disabled={disabled} value={value}/>;
+          <textarea className="form-control" placeholder={placeholder} onChange={this.handleChange}
+                    disabled={disabled} value={value}/>;
       } else {
         inputElement =
-          <input type="text" className="form-control" onChange={this.handleChange} value={value} disabled={disabled}/>;
+          <input type="text" className="form-control" placeholder={placeholder} onChange={this.handleChange}
+                 value={value} disabled={disabled}/>;
         let addonAfter = field.addonAfter ?
           <span className="input-group-addon">{t(field.addonAfter, field.service || model.service.id)}</span> : null;
         let addonBefore = field.addonBefore ?
