@@ -6,17 +6,19 @@
 
 import React from 'react';
 
+const { object, any, func, string } = React.PropTypes;
+
 export default class TextFieldFilter extends React.Component {
 
   static propTypes = {
-    value: React.PropTypes.any,
-    field: React.PropTypes.object,
-    onChange: React.PropTypes.func,
-    onClose: React.PropTypes.func,
+    value: any,
+    field: object,
+    onChange: func,
+    onClose: func,
   };
 
   static contextTypes = {
-    t: React.PropTypes.func,
+    t: func,
   };
 
   constructor(props) {
@@ -28,7 +30,7 @@ export default class TextFieldFilter extends React.Component {
     this.state = {
       mode: value.exact === false || value.exact === 'false' ? 2 : 1, // 1 精确匹配 2 包含
       value: value.value || '',
-      error: false,
+      error: !value.value,
       inverse: value.inverse || false
     };
     this.handleMode1 = this.handleMode.bind(this, 1);
@@ -74,12 +76,12 @@ export default class TextFieldFilter extends React.Component {
     const { field, onClose } = this.props;
     const { mode, value, error, inverse } = this.state;
     const buttonClassName = 'btn btn-default';
-    const buttonClassNameActive = buttonClassName + ' active';
-    let className = 'row field-filter field-filter-text' + (error ? ' error' : '');
+    const buttonClassNameActive = buttonClassName + ' btn-success';
+    let className = 'row field-filter text-field-filter' + (error ? ' error' : '');
     return (
       <div className={className}>
         <label className="col-xs-2 control-label text-right">{field.label}</label>
-        <form className="form-inline col-xs-10">
+        <div className="form-inline col-xs-10">
           <div className="form-group btn-group">
             <a
               className={mode === 1 ? buttonClassNameActive : buttonClassName}
@@ -101,7 +103,7 @@ export default class TextFieldFilter extends React.Component {
             className={inverse ? buttonClassNameActive : buttonClassName}
             onClick={this.handleInverse}>{t('inverse')}
           </a>
-        </form>
+        </div>
         <a className="btn field-filter-close" onClick={onClose}><i className="fa fa-close"/></a>
       </div>
     );

@@ -6,16 +6,18 @@
 
 import React from 'react';
 
+const { object, any, func } = React.PropTypes;
+
 export default class TextFieldCell extends React.Component {
 
   static propTypes = {
-    model: React.PropTypes.object,
-    field: React.PropTypes.object,
-    value: React.PropTypes.any
+    model: object,
+    field: object,
+    value: any
   };
 
   static contextTypes = {
-    t: React.PropTypes.func,
+    t: func,
   };
 
   shouldComponentUpdate(props) {
